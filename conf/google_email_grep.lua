@@ -1,11 +1,11 @@
 local email = ngx.var.arg_email or ""
-local hmtl_form = [[<form action="]] .. ngx.var.uri .. [["> <h2>Enter the first part of your email up to the @ (DO NOT INCLUDE the @)</h2> <ul> <li> <label for="email">Email:</label> <input class="text" name="email" type="text" /> </li> </ul> <input class="button" type="submit" value="Check" /> </form>]]
-local hmtl_warn = [[<h1 style="color:red">Only use letters, numbers, _, -, or .</h1>]]
+html_form = [[<form action="]] .. ngx.var.uri .. [["> <h2>Enter the first part of your email up to the @</h2><h3>DO NOT INCLUDE the @</h3> <ul> <li> <label for="email">Email:</label> <input class="text" name="email" type="text" /> </li> </ul> <input class="button" type="submit" value="Check" /> </form>]]
+html_warn = [[<h1 style="color:red">Only use letters, numbers, _, -, or .</h1>]]
 
 if email == "" then
-  ngx.say([[<form action="]] .. ngx.var.uri .. html_form)
+  ngx.say(html_form)
 elseif email:match("^[.A-Za-z0-9_-]+$") == nil then
-  ngx.say(hmtl_warn .. hmtl_form)
+  ngx.say(html_warn .. html_form)
 else
   ngx.say("Results for: " .. email)
   ngx.say([[<hr><ul>]])
@@ -21,5 +21,8 @@ else
   end
   ngx.say([[</ul>]])
   ngx.say([[<a href="]] .. ngx.var.uri .. [[">Return to perform another search</a>]])
-  ngx.say([[<hr><center>Copyright &copy; 2014 William Zajac</center>]]
 end
+ngx.say([[<hr>]])
+ngx.say([[Code source: <a href="https://github.com/billzajac/google_compromised_email_checker">https://github.com/billzajac/google_compromised_email_checker</a><br>]])
+ngx.say([[Data source: <a href="http://rghost.net/download/57937836/35f838fa3fb1639873e65fbe6b7487164772e031/google_5000000.txt.zip">http://rghost.net/download/57937836/35f838fa3fb1639873e65fbe6b7487164772e031/google_5000000.txt.zip</a>]])
+ngx.say([[<hr><center>Copyright &copy; 2014 William Zajac</center><br>]])
